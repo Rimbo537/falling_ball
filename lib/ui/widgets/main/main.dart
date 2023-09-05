@@ -24,6 +24,7 @@ class _MainWidgetState extends State<MainWidget> {
   bool counter = true; // вкл/откл счетчика
   bool failGame = false; // // Отображение надписи Fail
   bool isRestart = false;
+  int speed = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +62,18 @@ class _MainWidgetState extends State<MainWidget> {
             ),
           ),
           ScoreWidget(
+            speed: speed,
             tapCount: tapCount,
             onPressedFast: () {
               setState(() {
                 ballSpeed += 0.01;
+                speed += 1;
               });
             },
             onPressedSlow: () {
               setState(() {
                 ballSpeed -= 0.01;
+                speed -= 1;
               });
             },
           ),

@@ -9,8 +9,10 @@ class ScoreWidget extends StatelessWidget {
     required this.tapCount,
     required this.onPressedFast,
     required this.onPressedSlow,
+    required this.speed,
   });
   final int tapCount;
+  final int speed;
   final VoidCallback onPressedFast;
   final VoidCallback onPressedSlow;
 
@@ -23,9 +25,19 @@ class ScoreWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '${AppStrings.score} $tapCount',
-              style: AppStyles.main,
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  '${AppStrings.score} $tapCount',
+                  style: AppStyles.main,
+                ),
+                Text(
+                  'Speed: $speed',
+                  style: AppStyles.main,textWidthBasis: TextWidthBasis.parent,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
             TextButton(
                 onPressed: onPressedFast,
