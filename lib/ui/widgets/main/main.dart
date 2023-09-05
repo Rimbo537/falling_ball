@@ -69,12 +69,14 @@ class _MainWidgetState extends State<MainWidget> {
     if (gameIsStarted) {
       startGame();
     }
-    setState(() {
-      isMovingUp = !isMovingUp;
-      topMainSplash = false;
-      gameIsStarted = false;
-      if (counter) tapCount++;
-    });
+    if (!failGame) {
+      setState(() {
+        isMovingUp = !isMovingUp;
+        topMainSplash = false;
+        gameIsStarted = false;
+        if (counter) tapCount++;
+      });
+    }
   }
 
   void startGame() {
@@ -105,6 +107,7 @@ class _MainWidgetState extends State<MainWidget> {
       isMovingUp = true;
       tapCount = 0;
       counter = true;
+      failGame = false;
     });
   }
 }
