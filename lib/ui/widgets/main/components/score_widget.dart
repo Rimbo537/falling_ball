@@ -7,8 +7,12 @@ class ScoreWidget extends StatelessWidget {
   const ScoreWidget({
     super.key,
     required this.tapCount,
+    required this.onPressedFast,
+    required this.onPressedSlow,
   });
   final int tapCount;
+  final VoidCallback onPressedFast;
+  final VoidCallback onPressedSlow;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +20,32 @@ class ScoreWidget extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: AppColors.grey,
-        child: Center(
-          child: Text(
-            '${AppStrings.score} $tapCount',
-            style: AppStyles.main,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${AppStrings.score} $tapCount',
+              style: AppStyles.main,
+            ),
+            TextButton(
+                onPressed: onPressedFast,
+                child: const Text(
+                  'Speed+',
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.purple,
+                      fontWeight: FontWeight.bold),
+                )),
+            TextButton(
+                onPressed: onPressedSlow,
+                child: const Text(
+                  'Speed-',
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.purple,
+                      fontWeight: FontWeight.bold),
+                ))
+          ],
         ),
       ),
     );

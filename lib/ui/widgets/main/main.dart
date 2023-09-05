@@ -23,6 +23,7 @@ class _MainWidgetState extends State<MainWidget> {
   bool gameIsStarted = true; // Условие для запуска таймера и начала движения
   bool counter = true; // вкл/откл счетчика
   bool failGame = false; // // Отображение надписи Fail
+  bool isRestart = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,19 @@ class _MainWidgetState extends State<MainWidget> {
               ),
             ),
           ),
-          ScoreWidget(tapCount: tapCount),
+          ScoreWidget(
+            tapCount: tapCount,
+            onPressedFast: () {
+              setState(() {
+                ballSpeed += 0.01;
+              });
+            },
+            onPressedSlow: () {
+              setState(() {
+                ballSpeed -= 0.01;
+              });
+            },
+          ),
         ],
       ),
     );
@@ -74,6 +87,8 @@ class _MainWidgetState extends State<MainWidget> {
         isMovingUp = !isMovingUp;
         topMainSplash = false;
         gameIsStarted = false;
+        isRestart = false;
+        counter = true;
         if (counter) tapCount++;
       });
     }
@@ -81,6 +96,13 @@ class _MainWidgetState extends State<MainWidget> {
 
   void startGame() {
     Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      if (isRestart) {
+        timer.cancel();
+        setState(() {
+          counter = false;
+          topMainSplash = true;
+        });
+      }
       if (ballY > 1 || ballY < -1) {
         timer.cancel();
         setState(() {
@@ -108,6 +130,7 @@ class _MainWidgetState extends State<MainWidget> {
       tapCount = 0;
       counter = true;
       failGame = false;
+      isRestart = true;
     });
   }
 }
